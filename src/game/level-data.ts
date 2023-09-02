@@ -1,3 +1,4 @@
+import { Switch } from "./switch";
 
 export enum Direction {
   UP, RIGHT, DOWN, LEFT
@@ -17,6 +18,7 @@ export interface Node {
   y: number;
   station?: number;
   direction?: Direction;
+  switch?: Switch;
 }
 
 export interface LinkData {

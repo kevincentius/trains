@@ -7,14 +7,26 @@
 
   .node {
     position: absolute;
-    background: #ccc;
     transform: translate(-50%, -50%);
-    width: 30px;
-    height: 30px;
+    width: 15px;
+    height: 15px;
     border-radius: 100px;
 
     text-align: center;
     cursor: pointer;
+
+    &.station {
+      width: 50px;
+      height: 50px;
+    }
+
+    &.switch {
+      width: 30px;
+      height: 30px;
+
+      color: white;
+      font-weight: bold;
+    }
   }
 
   .link {

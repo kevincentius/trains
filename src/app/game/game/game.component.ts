@@ -17,7 +17,7 @@ export class GameComponent {
     this.level.tick();
   }
   
-  spawnChar() {
-    this.level.spawnChar();
+  spawnChar(station: number) {
+    this.level.spawnChar(station);
   }
 }

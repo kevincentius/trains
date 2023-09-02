@@ -11,9 +11,10 @@ export class Char {
   constructor(
     public level: Level,
     public fromNode: number,
-    public toNode?: number,
+    public toNode: number | undefined,
+    public targetStation: number,
   ) {
-    
+    this.updatePos();
   }
 
   update(dt: number) {
@@ -28,6 +29,10 @@ export class Char {
       }
     }
 
+    this.updatePos();
+  }
+
+  private updatePos() {
     [this.x, this.y] = this.level.calcCharPos(this);
   }
 }

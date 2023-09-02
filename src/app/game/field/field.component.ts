@@ -14,15 +14,25 @@ export class FieldComponent {
     linkWidth: 15,
   };
 
+  dirDisplay = [ '↑', '→', '↓', '←' ];
+
   @Input() level!: Level;
 
   onNodeClick(node: Node) {
-    const s = this.level.switchMap.get(node.id);
+    const s = node.switch;
     if (!s) {
       return;
     }
 
     const prevIndex = s.dirs.findIndex(dir => dir == node.direction);
     node.direction = s.dirs[(prevIndex + 1) % s.dirs.length];
+  }
+
+  getStationColor(station: number) {
+    return 'hsl(' + 60 * station + ', 100%, 70%)';
+  }
+
+  getCharColor(station: number) {
+    return 'hsl(' + 60 * station + ', 100%, 50%)';
   }
 }

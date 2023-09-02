@@ -36,17 +36,6 @@ export class Level {
 
   chars: Char[] = [];
 
-  switches: Switch[] = this.nodes
-    .filter(node => this.linkMap.get(node.id)?.length ?? 0 > 1)
-    .sort((a, b) => a.id - b.id)
-    .map(node => ({
-      nodeId: node.id,
-      dirs: this.linkMap.get(node.id)!.map(link => link.direction).sort(),
-    }));
-  switchMap = new Map<number, Switch>(
-    this.switches.map(s => [ s.nodeId, s ])
-  );
-
   constructor() {
     this.links.forEach(link => {
       this.linkMap.set(link.from, this.linkMap.get(link.from) ?? []);
@@ -59,6 +48,14 @@ export class Level {
         node.direction = outLinks[0].direction;
       }
     });
+    
+    this.nodes
+      .filter(node => (this.linkMap.get(node.id)?.length ?? 0) > 1)
+      .sort((a, b) => a.id - b.id)
+      .forEach(node => node.switch = {
+        nodeId: node.id,
+        dirs: this.linkMap.get(node.id)!.map(link => link.direction).sort(),
+      });
   }
 
   getNextNode(fromId: number) {
@@ -83,8 +80,8 @@ export class Level {
     });
   }
 
-  spawnChar() {
-    this.chars.push(new Char(this, 0, this.getNextNode(0)));
+  spawnChar(station: number) {
+    this.chars.push(new Char(this, 0, this.getNextNode(0), station));
   }
   
   calcCharPos(char: Char) {
