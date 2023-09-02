@@ -17,12 +17,12 @@ export class FieldComponent {
   @Input() level!: Level;
 
   onNodeClick(node: Node) {
-    const links = this.level.linkMap.get(node.id) ?? [];
-    if (links.length > 1) {
-      const dirs = links.map(link => link.direction).sort();
-      const prevIndex = dirs.findIndex(dir => dir == node.direction);
-      node.direction = dirs[(prevIndex + 1) % dirs.length];
+    const s = this.level.switchMap.get(node.id);
+    if (!s) {
+      return;
     }
-    console.log(this.level);
+
+    const prevIndex = s.dirs.findIndex(dir => dir == node.direction);
+    node.direction = s.dirs[(prevIndex + 1) % s.dirs.length];
   }
 }

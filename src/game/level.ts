@@ -2,6 +2,7 @@
 import { Char } from './char';
 import { links, nodes } from './hardcoded-level';
 import { Link, Node } from './level-data';
+import { Switch } from './switch';
 
 export class Level {
   gridSize = 120;
@@ -13,7 +14,6 @@ export class Level {
       y: this.gridSize * node.ty,
     };
   });
-  
   nodeMap = new Map<number, Node>(
     this.nodes.map(node => [ node.id, node ])
   );
@@ -32,10 +32,20 @@ export class Level {
       radians: Math.atan2(dy, dx),
     }
   });
-
   linkMap = new Map<number, Link[]>();
 
   chars: Char[] = [];
+
+  switches: Switch[] = this.nodes
+    .filter(node => this.linkMap.get(node.id)?.length ?? 0 > 1)
+    .sort((a, b) => a.id - b.id)
+    .map(node => ({
+      nodeId: node.id,
+      dirs: this.linkMap.get(node.id)!.map(link => link.direction).sort(),
+    }));
+  switchMap = new Map<number, Switch>(
+    this.switches.map(s => [ s.nodeId, s ])
+  );
 
   constructor() {
     this.links.forEach(link => {
@@ -69,7 +79,7 @@ export class Level {
 
   tick() {
     this.chars.forEach(char => {
-      char.update(250);
+      char.update(16);
     });
   }
 

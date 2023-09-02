@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Level } from 'src/game/level';
+import { FpsTimer } from 'src/game/timer';
 
 @Component({
   selector: 'app-game',
@@ -9,6 +10,8 @@ import { Level } from 'src/game/level';
 export class GameComponent {
 
   level = new Level();
+
+  timer = new FpsTimer(16, () => this.level.tick());
   
   tick() {
     this.level.tick();
