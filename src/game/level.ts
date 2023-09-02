@@ -104,7 +104,9 @@ export class Level {
   }
 
   acceptStation(targetStation: number, nodeId: number) {
-    if (this.nodeMap.get(nodeId)!.station != targetStation) {
+    if (this.nodeMap.get(nodeId)!.station == targetStation) {
+      this.score += 1;
+    } else {
       this.lives--;
 
       if (this.lives <= 0) {

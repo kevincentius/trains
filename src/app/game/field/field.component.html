@@ -11,7 +11,9 @@
   Interval: {{level.spawner.spawnIntervalBase}}
 </div>
 
-<div class="field">
+<div class="field"
+  (contextmenu)="$event.preventDefault()"
+>
   <div
     *ngFor="let link of level.links"
     class="link"
@@ -32,10 +34,13 @@
       [style.top]="node.y + 'px'"
       [style.background]="node.station == undefined ? '#666' : getStationColor(node.station)"
       (click)="onNodeClick($event, node)"
+      (contextmenu)="onNodeContextMenu($event, node)"
     >
-      <ng-container *ngIf="node.switch">
-        {{dirDisplay[node.direction!]}}
-      </ng-container>
+      <div style="text-align: center; padding-bottom: 3px;">
+        <ng-container *ngIf="node.switch">
+          {{dirDisplay[node.direction!]}}
+        </ng-container>
+      </div>
     </div>
   </ng-container>
 

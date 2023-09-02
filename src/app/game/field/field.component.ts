@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, HostListener } from '@angular/core';
 import { Char } from 'src/game/char';
 import { Level } from 'src/game/level';
 import { Node } from 'src/game/level-data';
@@ -17,15 +17,30 @@ export class FieldComponent {
   dirDisplay = [ '↑', '→', '↓', '←' ];
 
   @Input() level!: Level;
+  
+  @HostListener('contextmenu', ['$event'])
+  contextMenu(event: MouseEvent) {
+    event.preventDefault();
+  }
 
   onNodeClick(event: MouseEvent, node: Node) {
+    this.toggleSwitch(1, node);
+  }
+
+  onNodeContextMenu(event: MouseEvent, node: Node) {
+    event.preventDefault();
+
+    this.toggleSwitch(-1, node);
+  }
+
+  private toggleSwitch(dIndex: number, node: Node) {
     const s = node.switch;
     if (!s) {
       return;
     }
 
     const prevIndex = s.dirs.findIndex(dir => dir == node.direction);
-    node.direction = s.dirs[(prevIndex + s.dirs.length + (event.button == 2 ? -1 : 1)) % s.dirs.length];
+    node.direction = s.dirs[(prevIndex + s.dirs.length + dIndex) % s.dirs.length];
   }
 
   getStationColor(station: number) {

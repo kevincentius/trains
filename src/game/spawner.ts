@@ -5,7 +5,7 @@ export class Spawner {
   spawnIntervalBase = 2000;
   spawnIntervalVaryRange = 300; // vary in both direction, so range is twice as big as this number
   spawnIntervalMin = 1000;
-  spawnIntervalMultiplierPerSpawn = 0.995;
+  spawnIntervalMultiplierPerSpawn = 0.9975;
   spawnInterval = this.spawnIntervalBase
 
   counter = this.spawnInterval;
