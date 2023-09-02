@@ -1,0 +1,32 @@
+
+<div class="field">
+  <div
+    *ngFor="let link of level.links"
+    class="link"
+    [style.left]="link.x + 'px'"
+    [style.top]="link.y + 'px'"
+    [style.width]="link.length + 'px'"
+    [style.height]="uiConfig.linkWidth + 'px'"
+    [style.transform]="'translate(0, -50%) rotate(' + link.radians + 'rad)'"
+  ></div>
+
+  <div
+    *ngFor="let node of level.nodes"
+    class="node"
+    [class.station]="node.station != undefined"
+    [style.left]="node.x + 'px'"
+    [style.top]="node.y + 'px'"
+    (click)="onNodeClick(node)"
+  >
+    {{node.id}}.{{node.direction}}
+  </div>
+
+  <div
+    *ngFor="let char of level.chars"
+    class="char"
+    [style.left]="char.x + 'px'"
+    [style.top]="char.y + 'px'"
+  >
+    {{char.p}}
+  </div>
+</div>

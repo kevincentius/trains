@@ -1,0 +1,37 @@
+
+.field {
+  position: relative;
+  width: 600px;
+  height: 600px;
+  background: #000;
+
+  .node {
+    position: absolute;
+    background: #ccc;
+    transform: translate(-50%, -50%);
+    width: 30px;
+    height: 30px;
+    border-radius: 100px;
+
+    text-align: center;
+    cursor: pointer;
+  }
+
+  .link {
+    position: absolute;
+    background: #aaa;
+    transform-origin: center left;
+  }
+  
+  .char {
+    position: absolute;
+    background: #f00;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 20px;
+    border-radius: 100px;
+
+    text-align: center;
+    cursor: pointer;
+  }
+}
