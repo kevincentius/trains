@@ -11,10 +11,19 @@ export class GameComponent {
 
   level = new Level();
 
-  timer = new FpsTimer(16, () => this.level.tick());
+  timer = new FpsTimer(16, () => this.tick());
   
+  ngOnInit() {
+    this.level.gameOverSubject.subscribe(() => {
+      this.timer.stop();
+      alert('Game Over! Score: ' + this.level.score);
+    });
+
+    this.timer.start();
+  }
+
   tick() {
-    this.level.tick();
+    this.level.tick(16);
   }
   
   spawnChar(station: number) {

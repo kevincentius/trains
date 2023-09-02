@@ -18,14 +18,14 @@ export class FieldComponent {
 
   @Input() level!: Level;
 
-  onNodeClick(node: Node) {
+  onNodeClick(event: MouseEvent, node: Node) {
     const s = node.switch;
     if (!s) {
       return;
     }
 
     const prevIndex = s.dirs.findIndex(dir => dir == node.direction);
-    node.direction = s.dirs[(prevIndex + 1) % s.dirs.length];
+    node.direction = s.dirs[(prevIndex + s.dirs.length + (event.button == 2 ? -1 : 1)) % s.dirs.length];
   }
 
   getStationColor(station: number) {

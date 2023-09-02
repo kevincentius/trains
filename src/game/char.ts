@@ -6,7 +6,7 @@ export class Char {
   x = 0;
   y = 0;
 
-  speed = 1;
+  speed = 0.5;
 
   constructor(
     public level: Level,
@@ -17,19 +17,27 @@ export class Char {
     this.updatePos();
   }
 
-  update(dt: number) {
+  // returns false if the char should be deleted
+  update(dt: number): boolean {
     this.p += (this.speed * dt);
     if (this.p >= 1000) {
       if (this.toNode != undefined) {
         this.p -= 1000;
         this.fromNode = this.toNode;
         this.toNode = this.level.getNextNode(this.toNode);
+
+        if (!this.toNode) {
+          this.level.acceptStation(this.targetStation, this.fromNode);
+          return false;
+        }
       } else {
         this.p = 1;
       }
     }
 
     this.updatePos();
+
+    return true;
   }
 
   private updatePos() {

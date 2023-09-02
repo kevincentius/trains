@@ -39,11 +39,12 @@
     position: absolute;
     background: #f00;
     transform: translate(-50%, -50%);
-    width: 20px;
-    height: 20px;
+    width: 40px;
+    height: 40px;
     border-radius: 100px;
 
     text-align: center;
     cursor: pointer;
+    pointer-events: none;
   }
 }

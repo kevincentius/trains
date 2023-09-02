@@ -1,4 +1,16 @@
 
+<div>
+  Lives: {{level.lives}}
+</div>
+
+<div>
+  Score: {{level.score}}
+</div>
+
+<div>
+  Interval: {{level.spawner.spawnIntervalBase}}
+</div>
+
 <div class="field">
   <div
     *ngFor="let link of level.links"
@@ -19,7 +31,7 @@
       [style.left]="node.x + 'px'"
       [style.top]="node.y + 'px'"
       [style.background]="node.station == undefined ? '#666' : getStationColor(node.station)"
-      (click)="onNodeClick(node)"
+      (click)="onNodeClick($event, node)"
     >
       <ng-container *ngIf="node.switch">
         {{dirDisplay[node.direction!]}}

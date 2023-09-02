@@ -1,11 +1,15 @@
 
+import { Subject } from 'rxjs';
 import { Char } from './char';
 import { links, nodes } from './hardcoded-level';
 import { Link, Node } from './level-data';
+import { Spawner } from './spawner';
 import { Switch } from './switch';
 
 export class Level {
   gridSize = 120;
+
+  gameOverSubject = new Subject<void>();
   
   nodes: Node[] = nodes.map(node => {
     return {
@@ -35,6 +39,13 @@ export class Level {
   linkMap = new Map<number, Link[]>();
 
   chars: Char[] = [];
+
+  spawner = new Spawner(this);
+
+  stations = this.nodes.filter(node => node.station != undefined).length;
+
+  lives = 3;
+  score = 0;
 
   constructor() {
     this.links.forEach(link => {
@@ -69,15 +80,14 @@ export class Level {
     } else if (links.length == 1) {
       return links[0].to;
     } else {
-      console.log(node.direction, node.id, links.find(link => link.direction === node.direction));
       return links.find(link => link.direction == node.direction)!.to;
     }
   }
 
-  tick() {
-    this.chars.forEach(char => {
-      char.update(16);
-    });
+  tick(dt: number) {
+    this.spawner.tick(dt);
+
+    this.chars = this.chars.filter(char => char.update(dt));
   }
 
   spawnChar(station: number) {
@@ -91,5 +101,15 @@ export class Level {
       (char.p / 1000) * to.x + (1 - char.p / 1000) * from.x,
       (char.p / 1000) * to.y + (1 - char.p / 1000) * from.y,
     ];
+  }
+
+  acceptStation(targetStation: number, nodeId: number) {
+    if (this.nodeMap.get(nodeId)!.station != targetStation) {
+      this.lives--;
+
+      if (this.lives <= 0) {
+        this.gameOverSubject.next();
+      }
+    }
   }
 }
