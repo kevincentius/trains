@@ -7,9 +7,9 @@
   Score: {{level.score}}
 </div>
 
-<div>
-  Interval: {{level.spawner.spawnIntervalBase}}
-</div>
+<!-- <div>
+  Interval: {{level.spawner.spawnIntervalBase | number:'1.0-0'}}
+</div> -->
 
 <div class="field"
   (contextmenu)="$event.preventDefault()"
@@ -32,13 +32,15 @@
       [class.switch]="node.switch != undefined"
       [style.left]="node.x + 'px'"
       [style.top]="node.y + 'px'"
-      [style.background]="node.station == undefined ? '#666' : getStationColor(node.station)"
+      [style.background]="node.switch ? 'transparent' : node.station == undefined ? '#666' : getStationColor(node.station)"
       (click)="onNodeClick($event, node)"
       (contextmenu)="onNodeContextMenu($event, node)"
     >
-      <div style="text-align: center; padding-bottom: 3px;">
+      <div style="text-align: center; padding-bottom: 3px; z-index: 1;"
+        [class.switch-background]="node.switch"
+      >
         <ng-container *ngIf="node.switch">
-          {{dirDisplay[node.direction!]}}
+        {{dirDisplay[node.direction!]}}
         </ng-container>
       </div>
     </div>

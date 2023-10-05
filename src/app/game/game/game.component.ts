@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
+import { links, nodes } from 'src/game/hardcoded-level';
 import { Level } from 'src/game/level';
+import { LevelGen } from 'src/game/level-gen';
 import { FpsTimer } from 'src/game/timer';
 
 @Component({
@@ -9,10 +11,21 @@ import { FpsTimer } from 'src/game/timer';
 })
 export class GameComponent {
 
-  level = new Level();
+  levelGen = new LevelGen();
+  level = new Level(
+    this.levelGen.nodes,
+    this.levelGen.links,
+  );
+
+  // level = new Level(
+  //   nodes,
+  //   links,
+  // );
 
   timer = new FpsTimer(16, () => this.tick());
   
+  debug = false;
+
   ngOnInit() {
     this.level.gameOverSubject.subscribe(() => {
       this.timer.stop();

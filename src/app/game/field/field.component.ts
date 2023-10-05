@@ -44,10 +44,10 @@ export class FieldComponent {
   }
 
   getStationColor(station: number) {
-    return 'hsl(' + 60 * station + ', 100%, 70%)';
+    return 'hsl(' + 30 + 70 * station + ', 100%, ' + (station >= 5 ? 70 : 30) + '%)';
   }
 
   getCharColor(station: number) {
-    return 'hsl(' + 60 * station + ', 100%, 50%)';
+    return 'hsl(' + 30 + 70 * station + ', 100%, ' + (station >= 5 ? 70 : 30) + '%)';
   }
 }

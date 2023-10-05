@@ -2,10 +2,10 @@ import { Level } from "./level";
 
 export class Spawner {
 
-  spawnIntervalBase = 2000;
+  spawnIntervalBase = 3500;
   spawnIntervalVaryRange = 300; // vary in both direction, so range is twice as big as this number
-  spawnIntervalMin = 1000;
-  spawnIntervalMultiplierPerSpawn = 0.9975;
+  spawnIntervalMin = 2000;
+  spawnIntervalMultiplierPerSpawn = 0.99;
   spawnInterval = this.spawnIntervalBase
 
   counter = this.spawnInterval;

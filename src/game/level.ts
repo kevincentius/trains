@@ -1,8 +1,7 @@
 
 import { Subject } from 'rxjs';
 import { Char } from './char';
-import { links, nodes } from './hardcoded-level';
-import { Link, Node } from './level-data';
+import { Link, LinkData, Node, NodeData } from './level-data';
 import { Spawner } from './spawner';
 import { Switch } from './switch';
 
@@ -11,7 +10,7 @@ export class Level {
 
   gameOverSubject = new Subject<void>();
   
-  nodes: Node[] = nodes.map(node => {
+  nodes: Node[] = this.nodeDatas.map(node => {
     return {
       ...node,
       x: this.gridSize * node.tx,
@@ -22,7 +21,7 @@ export class Level {
     this.nodes.map(node => [ node.id, node ])
   );
 
-  links: Link[] = links.map(link => {
+  links: Link[] = this.linkDatas.map(link => {
     const from = this.nodeMap.get(link.from)!;
     const to = this.nodeMap.get(link.to)!;
     const dx = to.x - from.x;
@@ -47,7 +46,10 @@ export class Level {
   lives = 3;
   score = 0;
 
-  constructor() {
+  constructor(
+    private nodeDatas: NodeData[],
+    private linkDatas: LinkData[],
+  ) {
     this.links.forEach(link => {
       this.linkMap.set(link.from, this.linkMap.get(link.from) ?? []);
       this.linkMap.get(link.from)!.push(link);
